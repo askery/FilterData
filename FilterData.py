@@ -16,18 +16,21 @@ path = "/media/data/rowData_201304_201602/*.TXT"
 #1.2 - output
 outpath = "/media/data/outputData/"
 
-#2 - get the path of every single file in the path folder
+#2 - get the path of every single file in the path folder, also sort the list
 import glob   
-files = glob.glob(path)   
+files = glob.glob(path)
+files.sort()   
 
 #3 - open file, filter lines
+# readlines() instead
+
 for i in files:
-    output = outpath + i[-12:]
-    with open(output, "w+") as fw:
-        with open(i) as fo:
-            for line in fo:
-                if 'NEG' in line:
-                    fw.write(line)
+    output  = outpath + i[-12:]
+    fw      = open(output, "w+")
+    fo      = open(i, "r+")
+    line    = fo.readlines()
+    if 'NEG' in line:
+        fw.write(line)
 
 
 print datetime.now() - start
