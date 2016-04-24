@@ -13,7 +13,7 @@ start=datetime.now()
 #1.1 - input
 path = "/media/data/rowData_201304_201602/*.TXT"
 
-#1.2 - output
+#1.2 - output folder
 outpath = "/media/data/outputData/"
 
 #2 - get the path of every single file in the path folder, also sort the list
@@ -22,15 +22,29 @@ files = glob.glob(path)
 files.sort()   
 
 #3 - open file, filter lines
-# readlines() instead
+#3.1 - desired stocks (all in IBOV)
+stocks = ['PETR3']
+#stocks = ['ABEV3','BBAS3','BBDC3','BBDC4','BBSE3','BRAP4','BRFS3','BRKM5','BRML3','BVMF3',
+#'CCRO3','CESP6','CIEL3','CMIG4','CPFE3','CPLE6','CSAN3','CSNA3','CTIP3','CYRE3',
+#'ECOR3','EMBR3','ENBR3','EQTL3','ESTC3','FIBR3','GGBR4','GOAU4','HGTX3','HYPE3',
+#'ITSA4','ITUB4','JBSS3','KLBN11','KROT3','LAME4','LREN3','MRFG3','MRVE3','MULT3',
+#'NATU3','OIBR3','PCAR4','PETR3','PETR4','QUAL3','RADL3','RENT3','RUMO3','SANB11',
+#'SBSP3','SMLE3','SUZB5','TBLE3','TIMP3','UGPA3','USIM5','VALE3','VALE5','VIVT4','WEGE3']
 
+#4 stock filter function
+#def filterStock(line):
+#    return any(keyword in line for keyword in stocks)
+
+#5 - loop over all files in folder and all the desired stocks
 for i in files:
-    output  = outpath + i[-12:]
-    fw      = open(output, "w+")
-    fo      = open(i, "r+")
-    line    = fo.readlines()
-    if 'NEG' in line:
-        fw.write(line)
-
+    for stock in stocks:
+        output      = outpath + str(stock) +"/"+ i[-12:]
+        with open(output, "w+") as fw:
+            with open(i, "r+") as fo:
+                for line in fo:
+                    if stock in line:
+                        fw.write(line)
+    fo.close()
+    fw.close()        
 
 print datetime.now() - start
