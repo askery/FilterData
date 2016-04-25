@@ -31,20 +31,20 @@ stocks = ['PETR3']
 #'NATU3','OIBR3','PCAR4','PETR3','PETR4','QUAL3','RADL3','RENT3','RUMO3','SANB11',
 #'SBSP3','SMLE3','SUZB5','TBLE3','TIMP3','UGPA3','USIM5','VALE3','VALE5','VIVT4','WEGE3']
 
-#4 stock filter function
-#def filterStock(line):
-#    return any(keyword in line for keyword in stocks)
 
-#5 - loop over all files in folder and all the desired stocks
+#4 - loop over all files in folder and all the desired stocks
 for i in files:
-    for stock in stocks:
-        output      = outpath + str(stock) +"/"+ i[-12:]
-        with open(output, "w+") as fw:
-            with open(i, "r+") as fo:
-                for line in fo:
-                    if stock in line:
-                        fw.write(line)
-    fo.close()
-    fw.close()        
+    # if to select specific month (MM) and year (YYYY)
+    # i[-12:-6] gets the year and month in a string with the following pattern
+    # i = '/media/data/rowData_201304_201602/YYYYMMDD.TXT'
+    # "if i[-12:-6] == '201304':" selects April 2013  
+    if i[-12:-6] == '201304':
+        for stock in stocks:
+            output      = outpath + str(stock) +"/"+ i[-12:]
+            with open(output, "w+") as fw:
+                with open(i, "r+") as fo:
+                    for line in fo:
+                        if stock in line:
+                            fw.write(line)
 
 print datetime.now() - start
