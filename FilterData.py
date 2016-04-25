@@ -37,21 +37,23 @@ def check_create(folder):
     if not os.path.exists(folder):
         os.makedirs(folder)
     
-#4 - loop over all files in folder and all the desired stocks
+#5 - loop over all files in folder and all the desired stocks
 for i in files:
     # if to select specific month (MM) and year (YYYY)
     # i[-12:-6] gets the year and month in a string with the following pattern
     # i = '/media/data/rowData_201304_201602/YYYYMMDD.TXT'
-    # "if i[-12:-6] == '201304':" selects April 2013  
-    if i[-12:-6] == '201304':
+    # example 1
+    # "if i[-12:-6] == '201304':" selects April 2013
+    # example 2
+    # "if i[-12:-8] == '2013':" selects entire 2013
+    if i[-12:-8] == '2013':
         for stock in stocks:
             folder      = outpath + str(stock) +"/"
             check_create(folder)
             output      = folder + i[-12:]
-            with open(output, "w+") as fw:
-                with open(i, "r+") as fo:
-                    for line in fo:
-                        if stock in line:
-                            fw.write(line)
+            with open(output, "w+") as fw, open(i, "r+") as fo:
+                for line in fo:
+                    if stock in line:
+                        fw.write(line)
 
 print datetime.now() - start
