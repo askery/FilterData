@@ -31,7 +31,7 @@ stocks = ['PETR3','ABEV3','BBAS3']
 #'NATU3','OIBR3','PCAR4','PETR3','PETR4','QUAL3','RADL3','RENT3','RUMO3','SANB11',
 #'SBSP3','SMLE3','SUZB5','TBLE3','TIMP3','UGPA3','USIM5','VALE3','VALE5','VIVT4','WEGE3']
 
-#4 function create folder (or check if it already exists) for distinct stock
+#4 function to create folder (or check if it already exists) for distinct stocks
 import os
 def check_create(folder):
     if not os.path.exists(folder):
@@ -46,7 +46,7 @@ for i in files:
     # "if i[-12:-6] == '201304':" selects April 2013
     # example 2
     # "if i[-12:-8] == '2013':" selects entire 2013
-    if i[-12:-8] == '2013':
+    if i[-12:-6] == '201304':
         for stock in stocks:
             folder      = outpath + str(stock) +"/"
             check_create(folder)
