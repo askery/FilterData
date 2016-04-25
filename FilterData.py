@@ -23,7 +23,7 @@ files.sort()
 
 #3 - open file, filter lines
 #3.1 - desired stocks (all in IBOV)
-stocks = ['PETR3']
+stocks = ['PETR3','ABEV3','BBAS3']
 #stocks = ['ABEV3','BBAS3','BBDC3','BBDC4','BBSE3','BRAP4','BRFS3','BRKM5','BRML3','BVMF3',
 #'CCRO3','CESP6','CIEL3','CMIG4','CPFE3','CPLE6','CSAN3','CSNA3','CTIP3','CYRE3',
 #'ECOR3','EMBR3','ENBR3','EQTL3','ESTC3','FIBR3','GGBR4','GOAU4','HGTX3','HYPE3',
@@ -31,7 +31,12 @@ stocks = ['PETR3']
 #'NATU3','OIBR3','PCAR4','PETR3','PETR4','QUAL3','RADL3','RENT3','RUMO3','SANB11',
 #'SBSP3','SMLE3','SUZB5','TBLE3','TIMP3','UGPA3','USIM5','VALE3','VALE5','VIVT4','WEGE3']
 
-
+#4 function create folder (or check if it already exists) for distinct stock
+import os
+def check_create(folder):
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    
 #4 - loop over all files in folder and all the desired stocks
 for i in files:
     # if to select specific month (MM) and year (YYYY)
@@ -40,7 +45,9 @@ for i in files:
     # "if i[-12:-6] == '201304':" selects April 2013  
     if i[-12:-6] == '201304':
         for stock in stocks:
-            output      = outpath + str(stock) +"/"+ i[-12:]
+            folder      = outpath + str(stock) +"/"
+            check_create(folder)
+            output      = folder + i[-12:]
             with open(output, "w+") as fw:
                 with open(i, "r+") as fo:
                     for line in fo:
