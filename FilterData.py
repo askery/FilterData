@@ -23,7 +23,7 @@ files.sort()
 
 #3 - open file, filter lines
 #3.1 - desired stocks (all in IBOV)
-stocks = ['PETR3','ABEV3','BBAS3']
+stocks = ['PETR3']
 #stocks = ['ABEV3','BBAS3','BBDC3','BBDC4','BBSE3','BRAP4','BRFS3','BRKM5','BRML3','BVMF3',
 #'CCRO3','CESP6','CIEL3','CMIG4','CPFE3','CPLE6','CSAN3','CSNA3','CTIP3','CYRE3',
 #'ECOR3','EMBR3','ENBR3','EQTL3','ESTC3','FIBR3','GGBR4','GOAU4','HGTX3','HYPE3',
@@ -36,8 +36,21 @@ import os
 def check_create(folder):
     if not os.path.exists(folder):
         os.makedirs(folder)
+        
+#5 function to select the desired columns: see Layout file to more info on the data        
+def makeColumns(line):
+    pieces  = line.split(';');          # delimiters are ";"
+    date    = pieces[0].strip()         # first column  - date
+    #symb    = pieces[1].strip()         # second column - stock symbol
+    price   = pieces[3].strip()         # fourth column - trade price
+    volume  = pieces[4].strip()         # fifth column  - trade quantity
+    time    = pieces[5].strip()      # sixth column  - trade time (HH:MM:SS.NNN)
+    #key     = symb + hour + minu + sec[0] + sec[1]  # key definition as concatenation of columns
+    # OUTOUT FORMAT WITHOUT 'U', ',' OR '()'
+    output  = date + "   " + price + "   " + volume +"   "  + time + '\n'
+    return output
     
-#5 - loop over all files in folder and all the desired stocks
+#6 - loop over all files in folder and all the desired stocks
 for i in files:
     # if to select specific month (MM) and year (YYYY)
     # i[-12:-6] gets the year and month in a string with the following pattern
@@ -54,6 +67,6 @@ for i in files:
             with open(output, "w+") as fw, open(i, "r+") as fo:
                 for line in fo:
                     if stock in line:
-                        fw.write(line)
+                        fw.write(makeColumns(line))
 
 print datetime.now() - start
