@@ -47,7 +47,7 @@ def makeColumns(line):
     time    = pieces[5].strip()      # sixth column  - trade time (HH:MM:SS.NNN)
     #key     = symb + hour + minu + sec[0] + sec[1]  # key definition as concatenation of columns
     # OUTOUT FORMAT WITHOUT 'U', ',' OR '()'
-    output  = date + "   " + price + "   " + volume +"   "  + time + '\n'
+    output  = date + "\t" + str("%.2f" % float(price)) + "\t" + str(int(volume)) + "\t"  + time + '\n'
     return output
     
 #6 - loop over all files in folder and all the desired stocks
