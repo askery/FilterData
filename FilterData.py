@@ -58,7 +58,7 @@ for stock in stocks:
     # "if i[-12:-6] == '201304':" selects April 2013
     # example 2
     # "if i[-12:-8] == '2013':" selects entire 2013
-        if int(i[-12:-6]) == 201304:
+        if int(i[-12:-8]) in ['2013','2014', '2015', '2016']:
             folder      = outpath + str(stock) +"/"
             makeDir(folder)
             output      = folder + i[-12:]
